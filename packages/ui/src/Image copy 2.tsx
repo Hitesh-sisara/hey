@@ -16,29 +16,22 @@ export const Image = forwardRef(function Image(
     ImgHTMLAttributes<HTMLImageElement>,
     HTMLImageElement
   > & {
-    lowQualitySrc?: string;
+    lowQualitySrc: string;
   },
   ref: Ref<HTMLImageElement>
 ) {
-  const placeHolderImage = `${STATIC_IMAGES_URL}/placeholder.webp`;
-
-  const [src, setSrc] = useState(lowQualitySrc || placeHolderImage);
+  const [src, setSrc] = useState(lowQualitySrc);
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageLoadFailed, setImageLoadFailed] = useState(false);
-
-  console.log('Initial states:', { src, isLoaded, imageLoadFailed });
+  const placeHolderImage = `${STATIC_IMAGES_URL}/placeholder.webp`;
 
   const handleLoad = useCallback(() => {
-    console.log('Image loaded:', props.src);
-
     setIsLoaded(true);
     setSrc(props.src || placeHolderImage);
   }, [props.src]);
 
   const handleError = useCallback(
     (e: SyntheticEvent<HTMLImageElement, Event>) => {
-      console.log('Image load error:', e);
-
       if (imageLoadFailed) {
         return;
       }
@@ -51,8 +44,6 @@ export const Image = forwardRef(function Image(
   );
 
   useEffect(() => {
-    console.log('useEffect triggered:', props.src);
-
     const GlobalImage = window.Image;
     const img = new GlobalImage();
     img.src = props.src || placeHolderImage;
@@ -61,8 +52,6 @@ export const Image = forwardRef(function Image(
       img.onload = null;
     };
   }, [props.src, handleLoad]);
-
-  console.log('Rendering with states:', { src, isLoaded, imageLoadFailed });
 
   return (
     <img

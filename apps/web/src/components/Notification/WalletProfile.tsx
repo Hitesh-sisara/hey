@@ -24,6 +24,7 @@ export const NotificationWalletProfileAvatar: FC<
           currentTarget.src = getStampFyiURL(wallet?.address);
         }}
         src={getStampFyiURL(wallet?.address)}
+        lowQualitySrc=""
         className="h-8 w-8 rounded-full border bg-gray-200 dark:border-gray-700"
         height={32}
         width={32}
